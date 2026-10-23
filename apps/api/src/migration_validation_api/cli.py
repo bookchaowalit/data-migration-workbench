@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 
+from migration_validation_api.error_reporting import init_error_reporting
+
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
 
 
@@ -24,6 +26,8 @@ def main(argv: list[str] | None = None) -> None:
         parser.error(
             f"--host {args.host} is not loopback; the API is unauthenticated (pass --allow-remote to bind it)"
         )
+
+    init_error_reporting()
 
     import uvicorn
 

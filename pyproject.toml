@@ -16,6 +16,8 @@ dependencies = [
 [project.optional-dependencies]
 parquet = ["pyarrow>=14.0.0,<24.0.0"]
 dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.5"]
+# Opt-in error reporting: inert unless SENTRY_DSN is set (migration_validation_api/error_reporting.py).
+sentry = ["sentry-sdk[fastapi]>=2.20,<3"]
 
 [project.scripts]
 migration-workbench = "migration_validation_api.cli:main"

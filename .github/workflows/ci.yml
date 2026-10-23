@@ -18,10 +18,11 @@ concurrency:
 
 jobs:
   api:
-    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-python.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-python.yml@87dc5e1c7e0416886a6371d5a101bb2ccba38edd # v1.1.1
     with:
       python-version: "3.11"
-      install-command: uv pip install -e ".[dev,parquet]"
+      # Installs from the committed uv.lock (dev, parquet and sentry extras).
+      install-command: uv sync --frozen --all-extras
       test-command: |
         python -m pytest -q
         # Wheel contains every package and the sample data; the console script starts.
@@ -53,7 +54,7 @@ jobs:
         PY
 
   web:
-    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-node.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/ci-node.yml@87dc5e1c7e0416886a6371d5a101bb2ccba38edd # v1.1.1
     with:
       working-directory: apps/web
       node-version: "22"
@@ -62,4 +63,4 @@ jobs:
       build-command: NEXT_TELEMETRY_DISABLED=1 npm run build
 
   security:
-    uses: bookchaowalit/platform-ci-workflows/.github/workflows/security.yml@c37ef9d113eefb3ed45429717cb7ca201192c3fc # v1.0.1
+    uses: bookchaowalit/platform-ci-workflows/.github/workflows/security.yml@87dc5e1c7e0416886a6371d5a101bb2ccba38edd # v1.1.1
